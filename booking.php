@@ -2,6 +2,12 @@
 session_start();
 include('includes/config.php');
 
+$packageName = '';
+$packagePrice = '';
+$packageStatus = '';
+$bookingId = 0;
+$packageCompleted = false;
+
 if (isset($_GET['bkid'])) {
     $bookingId = $_GET['bkid'];
 
@@ -18,18 +24,7 @@ if (isset($_GET['bkid'])) {
         $packageName = $row['PackageName'];
         $packagePrice = $row['PackagePrice'];
         $bookingStatus = $row['status'];
-    } else {
-        $packageName = '';
-        $packagePrice = '';
-        $bookingStatus = '';
     }
-
-    // Check if the payment is completed for the specific booking ID
-    $paymentCompleted = isset($_GET['payment_success']) && $_GET['payment_success'] === 'true' && $bookingStatus == 1;
-} else {
-    $packageName = '';
-    $packagePrice = '';
-    $bookingStatus = '';
 }
 
 // Check if the payment is completed and update the button text

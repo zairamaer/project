@@ -46,8 +46,6 @@ if (strlen($_SESSION['login']) == 0) {
         $msg = "Payment completed successfully!";
         
     }
-    // After updating the payment status, send the booking ID as JSON response
-echo json_encode(['bookingId' => $bid]);
 
 ?>
 
@@ -102,6 +100,55 @@ echo json_encode(['bookingId' => $bid]);
             -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
         }
+            /* Style for the form container */
+    .cancel-form-container {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style for the textarea */
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Style for the submit button */
+    input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Hover effect for the submit button */
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    /* Style for the close button */
+    button {
+        background-color: #ccc;
+        color: #333;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Hover effect for the close button */
+    button:hover {
+        background-color: #999;
+    }
     </style>
 </head>
 
