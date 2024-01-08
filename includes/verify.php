@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <form method="post" action="">
-            <label for="verification_code">Enter Verification Code if you are human:</label>
+            <label for="verification_code">Enter Verification Code to verify your account: </label>
             <input type="text" id="verification_code" name="verification_code" required>
             <button type="submit">Verify</button>
         </form>
