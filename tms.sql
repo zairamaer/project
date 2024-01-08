@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2021 at 06:38 AM
--- Server version: 10.3.15-MariaDB
--- PHP Version: 7.2.19
+-- Generation Time: Jan 08, 2024 at 05:44 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -33,7 +32,7 @@ CREATE TABLE `admin` (
   `UserName` varchar(100) DEFAULT NULL,
   `Password` varchar(100) DEFAULT NULL,
   `updationDate` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `admin`
@@ -58,17 +57,25 @@ CREATE TABLE `tblbooking` (
   `RegDate` timestamp NULL DEFAULT current_timestamp(),
   `status` int(11) DEFAULT NULL,
   `CancelledBy` varchar(5) DEFAULT NULL,
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `cancelReason` text DEFAULT NULL,
+  `PaymentStatus` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblbooking`
 --
 
-INSERT INTO `tblbooking` (`BookingId`, `PackageId`, `UserEmail`, `FromDate`, `ToDate`, `Comment`, `RegDate`, `status`, `CancelledBy`, `UpdationDate`) VALUES
-(1, 1, 'test@gmail.com', '2020-07-11', '2020-07-18', 'I want this package.', '2020-07-08 06:38:36', 2, 'u', '2020-07-08 06:53:45'),
-(2, 2, 'test@gmail.com', '2020-07-10', '2020-07-13', 'There is some discount', '2020-07-08 06:43:25', 1, NULL, '2020-07-08 06:52:44'),
-(3, 4, 'abir@gmail.com', '2020-07-11', '2020-07-15', 'When I get conformation', '2020-07-08 06:44:39', 2, 'a', '2020-07-08 06:49:55');
+INSERT INTO `tblbooking` (`BookingId`, `PackageId`, `UserEmail`, `FromDate`, `ToDate`, `Comment`, `RegDate`, `status`, `CancelledBy`, `UpdationDate`, `cancelReason`, `PaymentStatus`) VALUES
+(1, 1, 'test@gmail.com', '2020-07-11', '2020-07-18', 'I want this package.', '2020-07-08 06:38:36', 2, 'u', '2024-01-02 14:34:06', NULL, 'Unpaid'),
+(2, 2, 'test@gmail.com', '2020-07-10', '2020-07-13', 'There is some discount', '2020-07-08 06:43:25', 1, NULL, '2020-07-08 06:52:44', NULL, 'Unpaid'),
+(3, 4, 'abir@gmail.com', '2020-07-11', '2020-07-15', 'When I get conformation', '2020-07-08 06:44:39', 2, 'a', '2020-07-08 06:49:55', NULL, 'Unpaid'),
+(5, 2, 'zairamaer@gmail.com', '15-01-2024', '22-01-2024', '', '2024-01-02 04:14:46', 2, 'u', '2024-01-02 04:14:53', NULL, 'Unpaid'),
+(6, 2, 'zairamaer@gmail.com', '13-01-2024', '15-01-2024', '', '2024-01-02 04:15:13', 2, 'u', '2024-01-02 15:54:13', NULL, 'Unpaid'),
+(7, 6, 'zairamaer@gmail.com', '13-01-2024', '22-01-2024', '', '2024-01-02 05:23:35', 2, 'u', '2024-01-02 16:42:35', NULL, 'Unpaid'),
+(8, 1, 'zairamaer@gmail.com', '20-01-2024', '22-01-2024', '', '2024-01-02 15:28:45', 2, 'u', '2024-01-06 01:20:49', 'personal reason', 'Unpaid'),
+(9, 1, 'zairamaer@gmail.com', '27-01-2024', '28-01-2024', '', '2024-01-02 15:51:18', 1, 'u', '2024-01-02 15:55:37', NULL, 'Unpaid'),
+(10, 2, 'zairamaer@gmail.com', '11-01-2024', NULL, '', '2024-01-03 03:49:39', 2, 'u', '2024-01-03 03:49:57', 'i cannot', NULL);
 
 -- --------------------------------------------------------
 
@@ -85,7 +92,7 @@ CREATE TABLE `tblenquiry` (
   `Description` mediumtext DEFAULT NULL,
   `PostingDate` timestamp NULL DEFAULT current_timestamp(),
   `Status` int(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblenquiry`
@@ -110,7 +117,7 @@ CREATE TABLE `tblissues` (
   `PostingDate` timestamp NULL DEFAULT current_timestamp(),
   `AdminRemark` mediumtext DEFAULT NULL,
   `AdminremarkDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblissues`
@@ -123,7 +130,44 @@ INSERT INTO `tblissues` (`id`, `UserEmail`, `Issue`, `Description`, `PostingDate
 (4, NULL, NULL, NULL, '2020-07-08 06:34:38', NULL, NULL),
 (5, NULL, NULL, NULL, '2020-07-08 06:35:06', NULL, NULL),
 (6, 'test@gmail.com', 'Booking Issues', 'I am not able to book package', '2020-07-08 06:36:03', 'Ok, We will fix the issue asap', '2020-07-08 06:55:22'),
-(7, 'test@gmail.com', 'Refund', 'I want my refund', '2020-07-08 06:56:29', NULL, NULL);
+(7, 'test@gmail.com', 'Refund', 'I want my refund', '2020-07-08 06:56:29', NULL, NULL),
+(8, NULL, NULL, NULL, '2024-01-02 03:49:59', NULL, NULL),
+(9, NULL, NULL, NULL, '2024-01-07 14:05:08', NULL, NULL),
+(10, NULL, NULL, NULL, '2024-01-07 14:08:36', NULL, NULL),
+(11, NULL, NULL, NULL, '2024-01-07 14:10:37', NULL, NULL),
+(12, NULL, NULL, NULL, '2024-01-07 14:17:48', NULL, NULL),
+(13, NULL, NULL, NULL, '2024-01-07 14:24:00', NULL, NULL),
+(14, NULL, NULL, NULL, '2024-01-07 14:36:21', NULL, NULL),
+(15, NULL, NULL, NULL, '2024-01-07 14:45:39', NULL, NULL),
+(16, NULL, NULL, NULL, '2024-01-07 14:49:07', NULL, NULL),
+(17, NULL, NULL, NULL, '2024-01-07 14:50:25', NULL, NULL),
+(18, NULL, NULL, NULL, '2024-01-07 14:51:20', NULL, NULL),
+(19, NULL, NULL, NULL, '2024-01-07 14:55:21', NULL, NULL),
+(20, NULL, NULL, NULL, '2024-01-07 14:57:32', NULL, NULL),
+(21, NULL, NULL, NULL, '2024-01-07 15:06:43', NULL, NULL),
+(22, NULL, NULL, NULL, '2024-01-07 15:11:07', NULL, NULL),
+(23, NULL, NULL, NULL, '2024-01-07 15:14:31', NULL, NULL),
+(24, NULL, NULL, NULL, '2024-01-07 15:15:16', NULL, NULL),
+(25, NULL, NULL, NULL, '2024-01-07 15:17:56', NULL, NULL),
+(26, NULL, NULL, NULL, '2024-01-07 15:20:36', NULL, NULL),
+(27, NULL, NULL, NULL, '2024-01-07 15:34:20', NULL, NULL),
+(28, NULL, NULL, NULL, '2024-01-07 15:48:18', NULL, NULL),
+(29, NULL, NULL, NULL, '2024-01-07 15:55:07', NULL, NULL),
+(30, NULL, NULL, NULL, '2024-01-07 16:03:25', NULL, NULL),
+(31, NULL, NULL, NULL, '2024-01-07 16:08:41', NULL, NULL),
+(32, NULL, NULL, NULL, '2024-01-07 16:09:33', NULL, NULL),
+(33, NULL, NULL, NULL, '2024-01-07 16:19:46', NULL, NULL),
+(34, NULL, NULL, NULL, '2024-01-07 16:23:22', NULL, NULL),
+(35, NULL, NULL, NULL, '2024-01-07 16:25:03', NULL, NULL),
+(36, NULL, NULL, NULL, '2024-01-07 16:25:53', NULL, NULL),
+(37, NULL, NULL, NULL, '2024-01-07 16:26:30', NULL, NULL),
+(38, NULL, NULL, NULL, '2024-01-07 16:27:23', NULL, NULL),
+(39, NULL, NULL, NULL, '2024-01-07 16:28:21', NULL, NULL),
+(40, NULL, NULL, NULL, '2024-01-07 16:29:03', NULL, NULL),
+(41, NULL, NULL, NULL, '2024-01-07 16:29:59', NULL, NULL),
+(42, NULL, NULL, NULL, '2024-01-07 16:52:34', NULL, NULL),
+(43, NULL, NULL, NULL, '2024-01-07 17:07:38', NULL, NULL),
+(44, NULL, NULL, NULL, '2024-01-08 04:09:41', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -135,7 +179,7 @@ CREATE TABLE `tblpages` (
   `id` int(11) NOT NULL,
   `type` varchar(255) DEFAULT '',
   `detail` longtext DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblpages`
@@ -164,7 +208,7 @@ CREATE TABLE `tbltourpackages` (
   `PackageImage` varchar(100) DEFAULT NULL,
   `Creationdate` timestamp NULL DEFAULT current_timestamp(),
   `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbltourpackages`
@@ -193,20 +237,24 @@ CREATE TABLE `tblusers` (
   `MobileNumber` char(10) DEFAULT NULL,
   `EmailId` varchar(70) DEFAULT NULL,
   `Password` varchar(100) DEFAULT NULL,
+  `verification_code` varchar(255) DEFAULT NULL,
   `RegDate` timestamp NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `verified` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblusers`
 --
 
-INSERT INTO `tblusers` (`id`, `FullName`, `MobileNumber`, `EmailId`, `Password`, `RegDate`, `UpdationDate`) VALUES
-(1, 'Manju Srivatav', '4456464654', 'manju@gmail.com', '202cb962ac59075b964b07152d234b70', '2020-07-08 06:33:20', NULL),
-(2, 'Kishan', '9871987979', 'kishan@gmail.com', '202cb962ac59075b964b07152d234b70', '2020-07-08 06:33:56', NULL),
-(3, 'Salvi Chandra', '1398756416', 'salvi@gmail.com', '202cb962ac59075b964b07152d234b70', '2020-07-08 06:34:20', NULL),
-(4, 'Abir', '4789756456', 'abir@gmail.com', '202cb962ac59075b964b07152d234b70', '2020-07-08 06:34:38', NULL),
-(5, 'Test', '1987894654', 'anuj@gmail.com', 'f925916e2754e5e03f75dd58a5733251', '2020-07-08 06:35:06', '2021-05-11 04:37:41');
+INSERT INTO `tblusers` (`id`, `FullName`, `MobileNumber`, `EmailId`, `Password`, `verification_code`, `RegDate`, `UpdationDate`, `verified`) VALUES
+(1, 'Manju Srivatav', '4456464654', 'manju@gmail.com', '202cb962ac59075b964b07152d234b70', NULL, '2020-07-08 06:33:20', NULL, 0),
+(2, 'Kishan', '9871987979', 'kishan@gmail.com', '202cb962ac59075b964b07152d234b70', NULL, '2020-07-08 06:33:56', NULL, 0),
+(3, 'Salvi Chandra', '1398756416', 'salvi@gmail.com', '202cb962ac59075b964b07152d234b70', NULL, '2020-07-08 06:34:20', NULL, 0),
+(4, 'Abir', '4789756456', 'abir@gmail.com', '202cb962ac59075b964b07152d234b70', NULL, '2020-07-08 06:34:38', NULL, 0),
+(5, 'Test', '1987894654', 'anuj@gmail.com', 'f925916e2754e5e03f75dd58a5733251', NULL, '2020-07-08 06:35:06', '2021-05-11 04:37:41', 0),
+(6, 'Zaira Mae Reyes', '0999713632', 'zairamaer@gmail.com', 'f137a528116329043dca7a3a876cbdad', '659ada5939a22', '2024-01-07 17:07:37', '2024-01-07 17:07:47', 1),
+(7, 'John Marcus', '0909713090', 'johnmarcus@gmail.com', 'f137a528116329043dca7a3a876cbdad', '659b7582d6f9d', '2024-01-08 04:09:38', '2024-01-08 04:09:52', 1);
 
 --
 -- Indexes for dumped tables
@@ -270,7 +318,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `tblbooking`
 --
 ALTER TABLE `tblbooking`
-  MODIFY `BookingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `BookingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tblenquiry`
@@ -282,7 +330,7 @@ ALTER TABLE `tblenquiry`
 -- AUTO_INCREMENT for table `tblissues`
 --
 ALTER TABLE `tblissues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `tblpages`
