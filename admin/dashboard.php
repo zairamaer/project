@@ -219,6 +219,7 @@ echo "Canceled by User at " .$result->upddate;
 							<th>Mobile No.</th>
 							<th>Email Address</th>
 							<th>Registration Date </th>
+							<th>Verified </th>
 							<th>Updation Date</th>
 						  </tr>
 						</thead>
@@ -238,6 +239,16 @@ foreach($results as $result)
 							<td><?php echo htmlentities($result->MobileNumber);?></td>
 							<td><?php echo htmlentities($result->EmailId);?></td>
 							<td><?php echo htmlentities($result->RegDate);?></td>
+							<td>
+								<?php
+								// Check if the 'verified' column value is 1
+								if ($result->verified == 1) {
+									echo "Verified";
+								} else {
+									echo "Not Verified";
+								}
+								?>
+							</td>>
 							<td><?php echo htmlentities($result->UpdationDate);?></td>
 						  </tr>
 						 <?php $cnt=$cnt+1;} }?>
