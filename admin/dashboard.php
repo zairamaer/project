@@ -283,25 +283,25 @@ foreach($results as $result)
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
-                    $sql = "SELECT tblbooking.BookingId as bookid, tblusers.FullName as fname, tblusers.MobileNumber as mnumber, tblusers.EmailId as email, tbltourpackages.PackageName as pckname, tblbooking.cancelReason as cancel_reason, tblbooking.FromDate as fdate, tblbooking.ToDate as tdate, tblbooking.Comment as comment, tblbooking.status as status, tblbooking.CancelledBy as cancelby, tblbooking.UpdationDate as upddate FROM tblusers JOIN tblbooking ON tblbooking.UserEmail=tblusers.EmailId JOIN tbltourpackages ON tbltourpackages.PackageId=tblbooking.PackageId WHERE tblbooking.status = 2";
-                    $query = $dbh->prepare($sql);
-                    $query->execute();
-                    $results = $query->fetchAll(PDO::FETCH_OBJ);
-                    $cnt = 1;
-                    if($query->rowCount() > 0) {
-                        foreach($results as $result) { ?>
-                            <tr>
-                                <td>#BK-<?php echo htmlentities($result->bookid);?></td>
-                                <td><?php echo htmlentities($result->fname);?></td>
-                                <td><?php echo htmlentities($result->email);?></td>
-                                <td><?php echo htmlentities($result->cancel_reason);?></td>
-                            </tr>
-                        <?php 
-                        $cnt = $cnt + 1;
-                        }
-                    } 
-                    ?>
+					<?php 
+						$sql = "SELECT tblbooking.BookingId as bookid, tblusers.FullName as fname, tblusers.MobileNumber as mnumber, tblusers.EmailId as email, tbltourpackages.PackageName as pckname, tblbooking.cancelReason as cancel_reason, tblbooking.FromDate as fdate, tblbooking.ToDate as tdate, tblbooking.Comment as comment, tblbooking.status as status, tblbooking.CancelledBy as cancelby, tblbooking.UpdationDate as upddate FROM tblusers JOIN tblbooking ON tblbooking.UserEmail=tblusers.EmailId JOIN tbltourpackages ON tbltourpackages.PackageId=tblbooking.PackageId WHERE tblbooking.status = 2 AND tblbooking.cancelReason IS NOT NULL";
+						$query = $dbh->prepare($sql);
+						$query->execute();
+						$results = $query->fetchAll(PDO::FETCH_OBJ);
+						$cnt = 1;
+						if($query->rowCount() > 0) {
+							foreach($results as $result) { ?>
+								<tr>
+									<td>#BK-<?php echo htmlentities($result->bookid);?></td>
+									<td><?php echo htmlentities($result->fname);?></td>
+									<td><?php echo htmlentities($result->email);?></td>
+									<td><?php echo htmlentities($result->cancel_reason);?></td>
+								</tr>
+							<?php 
+							$cnt = $cnt + 1;
+							}
+						} 
+					?>
                 </tbody>
             </table>
         </div>
